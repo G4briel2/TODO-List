@@ -17,7 +17,7 @@ public class Main {
                 opcao = tec.nextInt();
                 if (opcao >=1 && opcao <=5){
                     if (opcao == 1){
-                        System.out.println("vai listar as tarefas");
+                        t1.listarTarefas();
                     }
 
                     else if (opcao == 2){

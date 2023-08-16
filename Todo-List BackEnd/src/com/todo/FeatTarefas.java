@@ -91,4 +91,15 @@ public class FeatTarefas {
 
         tarefas.add(new Tarefa(_nome,_descricao, _dataConclusao, _categoria, _nivelPrioridade, _status));
     }
+
+    public void listarTarefas(){
+        if(tarefas.size() >= 1) {
+            for (int i = 0; i < tarefas.size(); i++) {
+                System.out.println("Tarefa " + (i + 1) + " (" + tarefas.get(i) + ")");
+            }
+        }
+        else {
+            System.out.println("Nenhuma tarefa cadastrada");
+        }
+    }
 }
