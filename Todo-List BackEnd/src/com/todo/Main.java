@@ -1,7 +1,50 @@
 package com.todo;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
+        Scanner tec = new Scanner(System.in);
 
+        System.out.println("#TODO-LIST#");
+        int opcao = 0;
+        boolean repeat = true;
+
+        do{
+            System.out.println("Escolha uma opção:\n1 - Listar tarefas\n2 - Criar tarefas\n3 - Editar tarefas\n4 - Excluir tarefas\n5 - Sair");
+            if (tec.hasNextInt()){
+                opcao = tec.nextInt();
+                if (opcao >=1 && opcao <=5){
+                    if (opcao == 1){
+                        System.out.println("vai listar as tarefas");
+                    }
+
+                    else if (opcao == 2){
+                        System.out.println("vai criar uma tarefa");
+                    }
+
+                    else if (opcao == 3){
+                        System.out.println("vai editar uma tarefa");
+                    }
+
+                    else if (opcao == 4){
+                        System.out.println("vai excluir uma tarefa");;
+                    }
+
+                    else {
+                        repeat = false;
+                    }
+                }
+
+                else {
+                    System.out.println("Opção inválida");
+                }
+            }
+
+            else{
+                tec.nextLine();
+                System.out.println("Opção inválida");
+            }
+        }while (repeat);
     }
 }
