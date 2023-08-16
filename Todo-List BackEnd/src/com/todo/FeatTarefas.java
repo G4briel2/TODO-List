@@ -20,8 +20,7 @@ public class FeatTarefas {
         int _nivelPrioridade = 1;
         int _status = 1;
 
-        System.out.println("#Criar tarefa#");
-        System.out.print("Nome: ");
+        System.out.print("#Criar tarefa#\nNome: ");
         _nome = tarefasTec.nextLine();
 
         System.out.print("Descrição: ");
@@ -56,6 +55,7 @@ public class FeatTarefas {
             System.out.println("Nível de prioridade:\n1 - Baixo\n2 - Médio\n3 - Alto");
             if (tarefasTec.hasNextInt()){
                 _nivelPrioridade = tarefasTec.nextInt();
+                tarefasTec.nextLine();
                 if (_nivelPrioridade > 0 && _nivelPrioridade < 4){
                     priorityError = false;
                 }
@@ -75,6 +75,7 @@ public class FeatTarefas {
             System.out.println("Status da tarefa:\n1 - To do\n2 - Doing\n3 - Done");
             if (tarefasTec.hasNextInt()){
                 _status = tarefasTec.nextInt();
+                tarefasTec.nextLine();
                 if (_status > 0 && _status < 4){
                     statusError = false;
                 }
@@ -87,9 +88,15 @@ public class FeatTarefas {
                 System.out.println("Valor inválido");
             }
         }while (statusError);
-        tarefasTec.nextLine();
 
         tarefas.add(new Tarefa(_nome,_descricao, _dataConclusao, _categoria, _nivelPrioridade, _status));
+
+        tarefas.sort(new Comparator<Tarefa>() {
+            @Override
+            public int compare(Tarefa o1, Tarefa o2) {
+                return o2.getNivelPrioridade() - o1.getNivelPrioridade();
+            }
+        });
     }
 
     public void listarTarefas(){
@@ -113,6 +120,7 @@ public class FeatTarefas {
                 listarTarefas();
                 if (tarefasTec.hasNextInt()){
                     int opcao = tarefasTec.nextInt();
+                    tarefasTec.nextLine();
                     if (opcao > 1 && opcao <= tarefas.size()){
                         tarefas.remove(opcao-1);
                         excludeError = false;
@@ -142,6 +150,7 @@ public class FeatTarefas {
                 System.out.println("Filtrar por:\n1 - Categoria\n2 - Prioridade\n3 - Status\n4 - Nenhum");
                 if (tarefasTec.hasNextInt()){
                     opcao = tarefasTec.nextInt();
+                    tarefasTec.nextLine();
                     if (opcao >=1 && opcao <=4){
                         if (opcao == 1){
                             listarCategorias();
@@ -191,6 +200,7 @@ public class FeatTarefas {
             System.out.println("Selecione uma categoria");
             if (tarefasTec.hasNextInt()){
                 int opcao = tarefasTec.nextInt();
+                tarefasTec.nextLine();
 
                 if (opcao >= 1 && opcao <= _categoria.size()){
                     String valorCategoria = _categoria.get(opcao-1);
@@ -217,6 +227,7 @@ public class FeatTarefas {
             System.out.println("Selecione uma prioridade\n1 - Alta\n2 - Média\n3 - Baixa");
             if (tarefasTec.hasNextInt()){
                 opcao = tarefasTec.nextInt();
+                tarefasTec.nextLine();
                 if (opcao >=1 && opcao <=3){
                     if (opcao == 1){
                         listarPorFiltro("3",2);
@@ -253,6 +264,7 @@ public class FeatTarefas {
             System.out.println("Selecione um status\n1 - To do\n2 - Doing\n3 - Done");
             if (tarefasTec.hasNextInt()){
                 opcao = tarefasTec.nextInt();
+                tarefasTec.nextLine();
                 if (opcao >=1 && opcao <=3){
                     if (opcao == 1){
                         listarPorFiltro("1",3);
