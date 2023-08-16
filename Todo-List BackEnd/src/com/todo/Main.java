@@ -29,7 +29,7 @@ public class Main {
                     }
 
                     else if (opcao == 4){
-                        System.out.println("vai excluir uma tarefa");;
+                        t1.excluirTarefa();
                     }
 
                     else {

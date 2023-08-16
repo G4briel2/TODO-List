@@ -102,4 +102,34 @@ public class FeatTarefas {
             System.out.println("Nenhuma tarefa cadastrada");
         }
     }
+
+    public void excluirTarefa(){
+
+        boolean excludeError = true;
+
+        if(tarefas.size() >= 1){
+            do{
+                System.out.println("Que tarefa deseja excluir ?\n0 - Cancelar");
+                listarTarefas();
+                if (tarefasTec.hasNextInt()){
+                    int opcao = tarefasTec.nextInt();
+                    if (opcao > 1 && opcao <= tarefas.size()){
+                        tarefas.remove(opcao-1);
+                        excludeError = false;
+                    } else if (opcao == 0) {
+                        excludeError = false;
+                    } else {
+                        System.out.println("Valor inválido");
+                    }
+                }
+                else{
+                    tarefasTec.nextLine();
+                    System.out.println("Valor inválido");
+                }
+            }while (excludeError);
+        }
+        else {
+            System.out.println("Nenhuma tarefa cadastrada");
+        }
+    }
 }
