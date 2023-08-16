@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner tec = new Scanner(System.in);
+        FeatTarefas t1 = new FeatTarefas();
 
         System.out.println("#TODO-LIST#");
         int opcao = 0;
@@ -20,7 +21,7 @@ public class Main {
                     }
 
                     else if (opcao == 2){
-                        System.out.println("vai criar uma tarefa");
+                        t1.criarTarefas();
                     }
 
                     else if (opcao == 3){
