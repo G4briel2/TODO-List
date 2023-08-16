@@ -13,10 +13,10 @@ public class FeatTarefas {
 
     public void criarTarefas(){
 
-        String _nome;
-        String _descricao;
+        String _nome = "";
+        String _descricao = "";
         String _dataConclusao = "";
-        String _categoria;
+        String _categoria = "";
         int _nivelPrioridade = 1;
         int _status = 1;
 
@@ -130,6 +130,176 @@ public class FeatTarefas {
         }
         else {
             System.out.println("Nenhuma tarefa cadastrada");
+        }
+    }
+
+    public void listarTarefasFiltradas(){
+        if(tarefas.size() >= 1){
+            int opcao = 0;
+            boolean repeat = true;
+
+            do{
+                System.out.println("Filtrar por:\n1 - Categoria\n2 - Prioridade\n3 - Status\n4 - Nenhum");
+                if (tarefasTec.hasNextInt()){
+                    opcao = tarefasTec.nextInt();
+                    if (opcao >=1 && opcao <=4){
+                        if (opcao == 1){
+                            listarCategorias();
+                        }
+
+                        else if (opcao == 2){
+                            listarPrioridades();
+                        }
+
+                        else if (opcao == 3){
+                            listarStatus();
+                        }
+
+                        else {
+                            listarTarefas();
+                        }
+
+                        repeat = false;
+                    }
+
+                    else {
+                        System.out.println("Opção inválida");
+                    }
+                }
+
+                else{
+                    tarefasTec.nextLine();
+                    System.out.println("Opção inválida");
+                }
+            }while (repeat);
+        }
+        else {
+            System.out.println("Nenhuma tarefa cadastrada");
+        }
+    }
+
+    public void listarCategorias(){
+        List<String> _categoria = new ArrayList<>(categorias);
+
+        for (int i = 0; i < categorias.size(); i++) {
+            System.out.println((i + 1) + " - " + _categoria.get(i));
+        }
+
+        boolean categoryError = true;
+
+        do{
+            System.out.println("Selecione uma categoria");
+            if (tarefasTec.hasNextInt()){
+                int opcao = tarefasTec.nextInt();
+
+                if (opcao >= 1 && opcao <= _categoria.size()){
+                    String valorCategoria = _categoria.get(opcao-1);
+                    listarPorFiltro(valorCategoria, 1);
+                    categoryError = false;
+                }
+
+                else {
+                    System.out.println("Valor inválido");
+                }
+            }
+            else{
+                tarefasTec.nextLine();
+                System.out.println("Valor inválido");
+            }
+        }while (categoryError);
+    }
+
+    public void listarPrioridades(){
+        boolean repeat = true;
+        int opcao = 0;
+
+        do{
+            System.out.println("Selecione uma prioridade\n1 - Alta\n2 - Média\n3 - Baixa");
+            if (tarefasTec.hasNextInt()){
+                opcao = tarefasTec.nextInt();
+                if (opcao >=1 && opcao <=3){
+                    if (opcao == 1){
+                        listarPorFiltro("3",2);
+                    }
+
+                    else if (opcao == 2){
+                        listarPorFiltro("2",2);
+                    }
+
+                    else{
+                        listarPorFiltro("1",2);
+                    }
+
+                    repeat = false;
+                }
+
+                else {
+                    System.out.println("Opção inválida");
+                }
+            }
+
+            else{
+                tarefasTec.nextLine();
+                System.out.println("Opção inválida");
+            }
+        }while (repeat);
+    }
+
+    public void listarStatus(){
+        boolean repeat = true;
+        int opcao = 0;
+
+        do{
+            System.out.println("Selecione um status\n1 - To do\n2 - Doing\n3 - Done");
+            if (tarefasTec.hasNextInt()){
+                opcao = tarefasTec.nextInt();
+                if (opcao >=1 && opcao <=3){
+                    if (opcao == 1){
+                        listarPorFiltro("1",3);
+                    }
+
+                    else if (opcao == 2){
+                        listarPorFiltro("2",3);
+                    }
+
+                    else{
+                        listarPorFiltro("3",3);
+                    }
+
+                    repeat = false;
+                }
+
+                else {
+                    System.out.println("Opção inválida");
+                }
+            }
+
+            else{
+                tarefasTec.nextLine();
+                System.out.println("Opção inválida");
+            }
+        }while (repeat);
+    }
+
+    public void listarPorFiltro(String valor, int tipo){
+
+        for (Tarefa task : tarefas){
+            if (tipo == 1){
+                if (task.getCategoria().equals(valor)){
+                    System.out.println(task);
+                }
+            } else if (tipo == 2) {
+                int _valor = Integer.parseInt(valor);
+                if (task.getNivelPrioridade() == _valor){
+                    System.out.println(task);
+                }
+            } else {
+                int _valor = Integer.parseInt(valor);
+                if (task.getStatus() == _valor){
+                    System.out.println(task);
+                }
+            }
+
         }
     }
 }

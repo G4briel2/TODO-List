@@ -17,7 +17,7 @@ public class Main {
                 opcao = tec.nextInt();
                 if (opcao >=1 && opcao <=5){
                     if (opcao == 1){
-                        t1.listarTarefas();
+                        t1.listarTarefasFiltradas();
                     }
 
                     else if (opcao == 2){
