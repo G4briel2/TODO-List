@@ -1,11 +1,14 @@
 package com.todo;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner tec = new Scanner(System.in);
         FeatTarefas t1 = new FeatTarefas();
+
+        t1.carregarTarefas();
 
         System.out.println("#TODO-LIST#");
         int opcao = 0;
@@ -33,6 +36,16 @@ public class Main {
                     }
 
                     else {
+                        try {
+                            t1.salvarTarefas();
+                        } catch (IOException e) {
+                            System.out.println("Erro ao salvar tarefas");
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
                         repeat = false;
                     }
                 }
