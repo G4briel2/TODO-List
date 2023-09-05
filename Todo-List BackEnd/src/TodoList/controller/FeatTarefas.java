@@ -1,6 +1,6 @@
-package com.todo;
+package TodoList.controller;
 
-import Objects.Tarefa;
+import TodoList.model.Tarefa;
 
 import java.io.*;
 import java.text.ParseException;
@@ -86,12 +86,7 @@ public class FeatTarefas {
 
         tarefas.add(new Tarefa(_nome, _descricao, _dataConclusao, _categoria, _nivelPrioridade, _status));
 
-        tarefas.sort(new Comparator<Tarefa>() {
-            @Override
-            public int compare(Tarefa o1, Tarefa o2) {
-                return o2.getNivelPrioridade() - o1.getNivelPrioridade();
-            }
-        });
+        tarefas.sort((o1, o2) -> o2.getNivelPrioridade() - o1.getNivelPrioridade());
     }
 
     public void listarTarefas() {

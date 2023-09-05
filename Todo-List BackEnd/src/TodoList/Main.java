@@ -1,4 +1,6 @@
-package com.todo;
+package TodoList;
+
+import TodoList.controller.FeatTarefas;
 
 import java.io.IOException;
 import java.util.Scanner;

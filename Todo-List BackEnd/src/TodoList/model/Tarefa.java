@@ -1,4 +1,4 @@
-package Objects;
+package TodoList.model;
 
 public class Tarefa {
     public String getNome() {
