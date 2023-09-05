@@ -1,6 +1,53 @@
 package TodoList.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Tarefa {
+    String nome;
+    String descricao;
+    LocalDate dataConclusao = LocalDate.now();
+    int nivelPrioridade;
+    String categoria;
+    int status;
+
+    public Tarefa(String nome, String descricao, LocalDate dataConclusao, int nivelPrioridade, String categoria, int status) {
+        setNome(nome);
+        setDescricao(descricao);
+        setDataConclusao(dataConclusao);
+        setNivelPrioridade(nivelPrioridade);
+        setCategoria(categoria);
+        setStatus(status);
+    }
+
+    @Override
+    public String toString() {
+
+        String nivel;
+        switch (getNivelPrioridade()) {
+            case 1 -> nivel = "Muito baixo";
+            case 2 -> nivel = "Baixo";
+            case 3 -> nivel = "Médio";
+            case 4 -> nivel = "Alto";
+            default -> nivel = "Muito alto";
+        }
+
+        String stat;
+        switch (getStatus()){
+            case 1 -> stat = "To do";
+            case 2 -> stat = "Doing";
+            default -> stat = "Done";
+        }
+
+        return "Nome: " + getNome() +
+                ", Descrição: " + getDescricao() +
+                ", Data de conclusão: " + getDataConclusaoFormatada() +
+                ", Categoria: " + getCategoria() +
+                ", Nível de prioridade: " + nivel +
+                ", Status: " + stat;
+
+    }
+
     public String getNome() {
         return nome;
     }
@@ -17,11 +64,16 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
-    public String getDataConclusao() {
+    public LocalDate getDataConclusao() {
         return dataConclusao;
     }
 
-    public void setDataConclusao(String dataConclusao) {
+    public String getDataConclusaoFormatada() {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return dataConclusao.format(formato);
+    }
+
+    public void setDataConclusao(LocalDate dataConclusao) {
         this.dataConclusao = dataConclusao;
     }
 
@@ -48,51 +100,4 @@ public class Tarefa {
     public void setStatus(int status) {
         this.status = status;
     }
-
-    public Tarefa(String nome, String descricao, String dataConclusao, String categoria, int nivelPrioridade, int status) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.dataConclusao = dataConclusao;
-        this.categoria = categoria;
-        this.nivelPrioridade = nivelPrioridade;
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        String nivel;
-
-        if (nivelPrioridade == 1){
-            nivel = "Baixo";
-        } else if (nivelPrioridade == 2) {
-            nivel = "Médio";
-        } else {
-            nivel = "Alto";
-        }
-
-        String stat;
-        if (status == 1){
-            stat = "To do";
-        } else if (status == 2) {
-            stat = "Doing";
-        } else {
-            stat = "Done";
-        }
-
-        return "Nome: " + nome +
-                ", Descrição: " + descricao +
-                ", Data de conclusão: " + dataConclusao +
-                ", Categoria: " + categoria +
-                ", Nível de prioridade: " + nivel +
-                ", Status: " + stat;
-
-    }
-
-    String nome;
-    String descricao;
-    String dataConclusao;
-
-    String categoria;
-    int nivelPrioridade;
-    int status;
 }
