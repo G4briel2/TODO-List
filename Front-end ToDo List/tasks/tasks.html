@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../globalStyle.css"/>
+    <link rel="stylesheet" href="tasks.css" />
+    <title>To Do List</title>
+  </head>
+  <body>
+    <nav>
+      <img src="../assets/navbar/logo.png" alt="logo" class="logo" />
+      <div class="links">
+        <div class="link">
+          <a href="../home/home.html">Home</a>
+          <a>Tarefas</a>
+          <div class="hover"></div>
+        </div>
+        <img src="../assets/navbar/avatar.png" alt="avatar" class="avatar" />
+      </div>
+    </nav>
+    <div id="backGroundUnselect"></div>
+
+    <div class="form" id="formularioCriacao">
+      <div class="inputs">
+        <div class="formTitle">
+          <img src="../assets/tasks/cadTas.svg" alt="" />
+          <span>Cadastrar Tarefa</span>
+        </div>
+        <div class="inputRow">
+          <div class="input">
+            <span>Nome:</span>
+            <input
+              type="text"
+              id="nomeForm"
+              placeholder="Digite o nome da tarefa"
+              required
+            />
+          </div>
+        </div>
+        <div class="inputCol">
+          <span>Descrição:</span>
+          <textarea
+            id="descricaoForm"
+            placeholder="Digite a descrição da tarefa aqui..."
+            required
+          ></textarea>
+        </div>
+        <div class="inputRow">
+          <div class="input">
+            <span>Data de conclusão:</span>
+            <input type="date" id="dataConclusaoForm" required />
+          </div>
+          <div class="input">
+            <span>Categoria:</span>
+            <input
+              type="text"
+              id="categoriaForm"
+              placeholder="Categoria da tarefa"
+              required
+            />
+          </div>
+        </div>
+        <div class="inputPrioridade">
+          <select
+            name="nivelPrioridade"
+            id="nivelPrioridadeForm"
+            class=""
+            required
+          >
+            <option selected disabled value="">Nível de prioridade</option>
+            <option value="5">Muito alto</option>
+            <option value="4">Alto</option>
+            <option value="3">Médio</option>
+            <option value="2">Baixo</option>
+            <option value="1">Muito baixo</option>
+          </select>
+
+          <span id="mensagemErroCadastro" class="erro"
+            >Nenhum campo pode ser vazio!</span
+          >
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button id="botaoConfirmarCadastro">Cadastrar tarefa</button>
+        <button id="botaoCancelarCadastro">Cancelar</button>
+      </div>
+    </div>
+
+    <div class="form" id="formularioEdicao">
+      <div class="inputs">
+        <div class="formTitle">
+          <img src="../assets/tasks/cadTas.svg" alt="" />
+          <span>Editar Tarefa</span>
+        </div>
+        <div class="inputRow">
+          <div class="input">
+            <span>Nome:</span>
+            <input type="text" id="nomeFormEdit" />
+          </div>
+        </div>
+        <div class="inputCol">
+          <span>Descrição:</span>
+          <textarea id="descricaoFormEdit"></textarea>
+        </div>
+        <div class="inputRow">
+          <div class="input">
+            <span>Data de conclusão:</span>
+            <input type="date" id="dataConclusaoFormEdit" />
+          </div>
+          <div class="input">
+            <span>Categoria:</span>
+            <input type="text" id="categoriaFormEdit" />
+          </div>
+        </div>
+        <div class="inputPrioridade">
+          <select name="nivelPrioridade" id="nivelPrioridadeFormEdit" class="">
+            <option selected>Nível de prioridade</option>
+            <option value="5">Muito alto</option>
+            <option value="4">Alto</option>
+            <option value="3">Médio</option>
+            <option value="2">Baixo</option>
+            <option value="1">Muito baixo</option>
+          </select>
+
+          <span id="mensagemErroEdicao" class="erro"
+            >Nenhum campo pode ser vazio!</span
+          >
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button id="botaoConfirmarEdicao">Atualizar tarefa</button>
+        <button id="botaoCancelarEdicao">Cancelar</button>
+      </div>
+    </div>
+
+    <div id="confirmBox">
+      <span>Realmente deseja excluir essa tarefa?</span>
+      <div class="buttons">
+        <button id="yes">Sim</button>
+        <button id="no">Não</button>
+      </div>
+    </div>
+
+    <main>
+      <button id="abrirFormCriacao" class="adicionar">
+        <img src="../assets/tasks/addTask.png" alt="adicionar" />
+        <span>Adicionar tarefa</span>
+      </button>
+      <div class="listas">
+        <div class="listTitle">
+          <img src="../assets/tasks/ToDo.svg" alt="ToDo" />
+          <span>ToDo</span>
+        </div>
+        <div class="listaDeTarefas" id="1">
+          <!-- To do -->
+        </div>
+      </div>
+
+      <div class="listas">
+        <div class="listTitle">
+          <img src="../assets/tasks/Doing.svg" alt="ToDo" />
+          <span>Doing</span>
+        </div>
+        <div class="listaDeTarefas" id="2">
+          <!-- Doing -->
+        </div>
+      </div>
+
+      <div class="listas">
+        <div class="listTitle">
+          <img src="../assets/tasks/Done.svg" alt="ToDo" />
+          <span>Done</span>
+        </div>
+        <div class="listaDeTarefas" id="3">
+          <!-- Done -->
+        </div>
+      </div>
+    </main>
+
+    <script src="tasks.js"></script>
+  </body>
+</html>
