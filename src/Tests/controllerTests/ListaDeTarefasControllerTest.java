@@ -67,7 +67,7 @@ public class ListaDeTarefasControllerTest {
     @Test
     public void cadastrarTarefaNoArrayDeTarefasTeste(){
         ArrayList<Tarefa> tarefas = tarefasController.getListaDeTarefas();
-        String toStringDaTarefaEsperado = "Nome: NomeExemplo, Descrição: DescriçãoExemplo, Data de conclusão: 05/09/2023, Categoria: Lazer, Nível de prioridade: Muito baixo, Status: To do";
+        String toStringDaTarefaEsperado = "Nome: NomeExemplo, Descrição: DescriçãoExemplo, Data de conclusão: 10/09/2023, Categoria: Lazer, Nível de prioridade: Muito baixo, Status: To do";
 
         tarefasController.cadastrarTarefa(new Tarefa("NomeExemplo","DescriçãoExemplo", LocalDate.now(),1, "Lazer", 1));
 
@@ -78,7 +78,7 @@ public class ListaDeTarefasControllerTest {
     @Test
     public void editarTarefaTeste(){
         ArrayList<Tarefa> tarefas = tarefasController.getListaDeTarefas();
-        String toStringDaTarefaEsperado = "Nome: NomeExemplo, Descrição: DescriçãoExemplo, Data de conclusão: 05/09/2023, Categoria: Lazer, Nível de prioridade: Muito baixo, Status: To do";
+        String toStringDaTarefaEsperado = "Nome: NomeExemplo, Descrição: DescriçãoExemplo, Data de conclusão: 10/09/2023, Categoria: Lazer, Nível de prioridade: Muito baixo, Status: To do";
         int indice = 3;
 
         tarefasController.editarTarefa((new Tarefa("NomeExemplo","DescriçãoExemplo", LocalDate.now(),1, "Lazer", 1)), 3);
