@@ -1,10 +1,13 @@
-let selectNivelPrioridade = document.querySelectorAll("select");
+let selectNivelPrioridade = document.getElementById("nivelPrioridadeForm");
+let selectNivelPrioridadeEdit = document.getElementById("nivelPrioridadeFormEdit");
+mudarCorSelect(selectNivelPrioridade)
+mudarCorSelect(selectNivelPrioridadeEdit)
 
-selectNivelPrioridade.forEach(function (select) {
-  select.classList.add("nivelNaoSelecionado");
+function mudarCorSelect(elemento){
+  elemento.classList.add("nivelNaoSelecionado");
 
-  select.addEventListener("change", function () {
-    select.classList.remove(
+  elemento.addEventListener("change", function () {
+    elemento.classList.remove(
       "nivel5",
       "nivel4",
       "nivel3",
@@ -13,27 +16,27 @@ selectNivelPrioridade.forEach(function (select) {
       "nivelSelecionado"
     );
 
-    let valorSelecionado = select.value;
+    let valorSelecionado = elemento.value;
 
     switch (valorSelecionado) {
       case "5":
-        select.classList.add("nivel5", "nivelSelecionado");
+        elemento.classList.add("nivel5", "nivelSelecionado");
         break;
       case "4":
-        select.classList.add("nivel4", "nivelSelecionado");
+        elemento.classList.add("nivel4", "nivelSelecionado");
         break;
       case "3":
-        select.classList.add("nivel3", "nivelSelecionado");
+        elemento.classList.add("nivel3", "nivelSelecionado");
         break;
       case "2":
-        select.classList.add("nivel2", "nivelSelecionado");
+        elemento.classList.add("nivel2", "nivelSelecionado");
         break;
       case "1":
-        select.classList.add("nivel1", "nivelSelecionado");
+        elemento.classList.add("nivel1", "nivelSelecionado");
         break;
     }
   });
-});
+}
 
 // =========================================
 
@@ -44,14 +47,14 @@ class Tarefa {
     dataConclusao,
     nivelPrioridade,
     categoria,
-    estatus
+    status
   ) {
     this.nome = nome;
     this.descricao = descricao;
     this.dataConclusao = dataConclusao;
     this.nivelPrioridade = nivelPrioridade;
     this.categoria = categoria;
-    this.estatus = estatus;
+    this.status = status;
   }
 }
 
@@ -80,14 +83,14 @@ let descricaoForm = document.getElementById("descricaoForm");
 let dataConclusaoForm = document.getElementById("dataConclusaoForm");
 let categoriaForm = document.getElementById("categoriaForm");
 let nivelPrioridadeForm = document.getElementById("nivelPrioridadeForm");
+let statusForm = document.getElementById("statusForm");
 
 let nomeFormEdit = document.getElementById("nomeFormEdit");
 let descricaoFormEdit = document.getElementById("descricaoFormEdit");
 let dataConclusaoFormEdit = document.getElementById("dataConclusaoFormEdit");
 let categoriaFormEdit = document.getElementById("categoriaFormEdit");
-let nivelPrioridadeFormEdit = document.getElementById(
-  "nivelPrioridadeFormEdit"
-);
+let nivelPrioridadeFormEdit = document.getElementById("nivelPrioridadeFormEdit");
+let statusFormEdit = document.getElementById("statusFormEdit");
 
 let ArrayDeTarefas = [
   {
@@ -96,7 +99,7 @@ let ArrayDeTarefas = [
     dataConclusao: "2023-09-08",
     nivelPrioridade: 3,
     categoria: "Categoria de exemplo",
-    estatus: 1,
+    status: 1,
   },
 ];
 
@@ -109,8 +112,10 @@ function criarTarefa() {
   let nivelPrioridadeForm = document.getElementById(
     "nivelPrioridadeForm"
   ).value;
+  let statusForm = document.getElementById("statusForm").value;
   let categoriaForm = document.getElementById("categoriaForm").value;
 
+  statusForm = parseInt(statusForm);
   nivelPrioridadeForm = parseInt(nivelPrioridadeForm);
 
   return new Tarefa(
@@ -119,7 +124,7 @@ function criarTarefa() {
     dataConclusaoForm,
     nivelPrioridadeForm,
     categoriaForm,
-    1
+    statusForm
   );
 }
 
@@ -139,6 +144,7 @@ function limparFormulario() {
   );
 
   document.getElementById("categoriaForm").value = "";
+  statusForm.value = "";
 
   mensagemErroCadastro.style.display = "none";
 
@@ -157,6 +163,8 @@ function limparFormulario() {
     );
 
   document.getElementById("categoriaFormEdit").value = "";
+  statusFormEdit.value = "";
+
   mensagemErroEdicao.style.display = "none";
 }
 
@@ -167,6 +175,7 @@ function formatadorData(dataString) {
     timeZone: "UTC",
     day: "numeric",
     month: "numeric",
+    year: "2-digit"
   });
 
   return dataFormatada;
@@ -196,7 +205,7 @@ botaoConfirmarCadastro.addEventListener("click", function () {
     !descricaoForm.value ||
     !dataConclusaoForm.value ||
     !categoriaForm.value ||
-    nivelPrioridadeForm.value === ""
+    nivelPrioridadeForm.value === "" || statusForm.value === ""
   ) {
     mensagemErroCadastro.style.display = "flex";
   } else {
@@ -212,6 +221,7 @@ botaoConfirmarCadastro.addEventListener("click", function () {
 
 botaoCancelarCadastro.addEventListener("click", function () {
   alterarVisibilidadeElemento(formCadastrar, backgroundUnselect);
+  limparFormulario();
 });
 
 function renderizarListaTarefas(tarefas) {
@@ -221,7 +231,7 @@ function renderizarListaTarefas(tarefas) {
     lista.innerHTML = "";
 
     tarefas.forEach(function (tarefa) {
-      if (tarefa.estatus === parseInt(lista.id)) {
+      if (tarefa.status === parseInt(lista.id)) {
         let cardTarefa = criarCardTarefa(tarefa);
         lista.appendChild(cardTarefa);
       }
@@ -232,17 +242,25 @@ function renderizarListaTarefas(tarefas) {
 function criarCardTarefa(tarefa) {
   let cardTarefa = document.createElement("div");
   cardTarefa.className = "tarefaCard";
-
+  cardTarefa.setAttribute("draggable", "true");
+  cardTarefa.setAttribute("ondragstart", "drag(event)")
+  cardTarefa.setAttribute("id", "draggable");
+  
+  let dataTarefa;
   let textoBotao = "";
-  switch (tarefa.estatus) {
+  switch (tarefa.status) {
     case 1:
-      textoBotao = "Realizar";
+      textoBotao = "Começar";
+      dataTarefa = formatadorData(tarefa.dataConclusao)
       break;
     case 2:
       textoBotao = "Concluir";
+      dataTarefa = formatadorData(tarefa.dataConclusao)
       break;
     case 3:
       textoBotao = "Feito";
+      dataTarefa = new Date()
+      dataTarefa = formatadorData(dataTarefa);
   }
 
   let nivelPrioridadeCor = "";
@@ -260,7 +278,7 @@ function criarCardTarefa(tarefa) {
       nivelPrioridadeCor = "nivel3";
       nivelPrioridadeTexto = "Médio";
       break;
-    case 1:
+    case 2:
       nivelPrioridadeCor = "nivel2";
       nivelPrioridadeTexto = "Baixo";
       break;
@@ -287,11 +305,10 @@ function criarCardTarefa(tarefa) {
                     <div class="actions">
                         <div class="act1">
                             <button id="mandarProximaLista" class="proximaLista">${textoBotao}</button>
-                            <span id="dataConclusao" class="date">${formatadorData(
-                              tarefa.dataConclusao
-                            )}</span>
+                            <span id="dataConclusao" class="date">${dataTarefa}</span>
                         </div>
                         <div class="act2">
+                            <button id="mandarListaAnterior" class="icon"><img src="../assets/tasks/reset.svg" alt="retro"></button>
                             <button class="editarTarefa" class="icon"><img src="../assets/tasks/edit.svg" alt="edit"></button>
                             <button class="excluirTarefa" class="icon"><img src="../assets/tasks/exclude.svg" alt="exclude"></button>
                         </div>
@@ -301,6 +318,12 @@ function criarCardTarefa(tarefa) {
   const botaoProximaLista = cardTarefa.querySelector("#mandarProximaLista");
   botaoProximaLista.addEventListener("click", function () {
     moverParaProximaLista(tarefa);
+    renderizarListaTarefas(ArrayDeTarefas);
+  });
+
+  const botaoListaAnterior = cardTarefa.querySelector("#mandarListaAnterior");
+  botaoListaAnterior.addEventListener("click", function () {
+    moverParaListaAnterior(tarefa);
     renderizarListaTarefas(ArrayDeTarefas);
   });
 
@@ -319,10 +342,14 @@ function criarCardTarefa(tarefa) {
 }
 
 function moverParaProximaLista(tarefa) {
-  if (tarefa.estatus === 1) {
-    tarefa.estatus = 2;
-  } else if (tarefa.estatus === 2) {
-    tarefa.estatus = 3;
+  if (tarefa.status < 3){
+    tarefa.status++;
+  }
+}
+
+function moverParaListaAnterior(tarefa){
+  if (tarefa.status > 1){
+    tarefa.status--;
   }
 }
 
@@ -349,6 +376,7 @@ function editarTarefa(tarefa) {
   document.getElementById("nivelPrioridadeFormEdit").value =
     tarefa.nivelPrioridade;
   document.getElementById("categoriaFormEdit").placeholder = tarefa.categoria;
+  statusFormEdit.value = tarefa.status;
 
   botaoConfirmarEdicao.onclick = function () {
     if (
@@ -356,7 +384,7 @@ function editarTarefa(tarefa) {
       !descricaoFormEdit.value ||
       !dataConclusaoFormEdit.value ||
       !categoriaFormEdit.value ||
-      nivelPrioridadeFormEdit.value === ""
+      nivelPrioridadeFormEdit.value === "" || statusFormEdit.value === ""
     ) {
       mensagemErroEdicao.style.display = "flex";
     } else {
@@ -369,6 +397,7 @@ function editarTarefa(tarefa) {
         document.getElementById("nivelPrioridadeFormEdit").value
       );
       tarefa.categoria = document.getElementById("categoriaFormEdit").value;
+      tarefa.status = parseInt(statusFormEdit.value);
 
       renderizarListaTarefas(ArrayDeTarefas);
 
@@ -384,3 +413,21 @@ function editarTarefa(tarefa) {
 }
 
 renderizarListaTarefas(ArrayDeTarefas);
+
+// ============================
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+
+let card = document.getElementById("draggable");

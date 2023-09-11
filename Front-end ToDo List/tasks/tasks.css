@@ -234,14 +234,14 @@ textarea::placeholder {
   font-weight: 600;
 }
 
-.form .inputs .inputPrioridade {
-  width: 100%;
+.form .inputs .selects {
+  width: 60%;
 
   display: flex;
   flex-direction: row;
   align-items: center;
 
-  gap: 10rem;
+  gap: 1.1rem;
 }
 
 .nivelNaoSelecionado {
@@ -268,7 +268,7 @@ textarea::placeholder {
   color: #111318;
 }
 
-.form .inputs .inputPrioridade select {
+.form .inputs .selects select {
   border: none;
   outline: none;
 
@@ -276,15 +276,18 @@ textarea::placeholder {
 
   padding: 0 0.6rem;
 
-  width: 30%;
+  width: 100%;
   height: 4rem;
 
   font-size: 1.6rem;
   font-weight: 600;
 }
 
-.form .inputs .inputPrioridade span.erro {
+.form .inputs span.erro {
   display: none;
+
+  position: absolute;
+  bottom: 4.3rem;
 
   font-size: 1.6rem;
   color: #b44141;
@@ -399,18 +402,19 @@ textarea::placeholder {
 }
 
 #confirmBox .buttons button:nth-child(2) {
-  color: #c31d1d;
-  border: 5px solid #c31d1d;
+  border: none;
+  background-color: #c31d1d;
+  color: white;
 }
 
 #confirmBox .buttons button:active {
-  transform: scale(0.9);
+  transform: scale(0.95);
 
   transition: 200ms;
 }
 
 main {
-  padding: 18.9rem 1rem 9rem 1rem;
+  padding: 18.9rem 2.4rem 9rem 2.4rem;
   display: flex;
   flex-direction: column;
 
@@ -470,6 +474,8 @@ main .listas {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
+  
+  border: 1px solid;
 }
 
 main .listas .listTitle {
@@ -504,7 +510,7 @@ main .listas .listaDeTarefas .tarefaCard {
 
   padding: 1.4rem 1.2rem 1.2rem 1.2rem;
 
-  width: 25.4rem;
+  width: 31.625rem;
   height: 25.4rem;
 
   border-radius: 1rem;
@@ -642,7 +648,7 @@ main .listas .listaDeTarefas .tarefaCard .actions .act1 span {
   align-items: center;
   justify-content: center;
 
-  width: 5.3rem;
+  width: 8rem;
   height: 2.8rem;
 
   border-radius: 99.9rem;
@@ -674,7 +680,7 @@ main .listas .listaDeTarefas .tarefaCard .actions .act2 button {
   transition: 200ms;
 }
 
-main .listas .listaDeTarefas .tarefaCard .actions .act2 button:nth-child(1) {
+main .listas .listaDeTarefas .tarefaCard .actions .act2 button.editarTarefa {
   border-radius: 0.3rem;
   background: #e0e0e9;
 }
@@ -685,11 +691,11 @@ main
   .tarefaCard
   .actions
   .act2
-  button:nth-child(1):active {
+  button.editarTarefa:active {
   background-color: #b4b4c7;
 }
 
-main .listas .listaDeTarefas .tarefaCard .actions .act2 button:nth-child(2) {
+main .listas .listaDeTarefas .tarefaCard .actions .act2 button.excluirTarefa {
   border-radius: 0.3rem 2rem 2rem 0.3rem;
   background-color: #111318;
 }
@@ -700,6 +706,19 @@ main
   .tarefaCard
   .actions
   .act2
-  button:nth-child(2):active {
+  button.excluirTarefa:active {
   background-color: #000000;
+}
+
+main .listas:nth-child(2) .listaDeTarefas .tarefaCard .actions .act2 button#mandarListaAnterior{
+  display: none;
+}
+
+main .listas .listaDeTarefas .tarefaCard .actions .act2 button#mandarListaAnterior {
+  border-radius: 0.3rem;
+  background-color: #6d0202;
+}
+
+main .listas .listaDeTarefas .tarefaCard .actions .act2 button#mandarListaAnterior:active {
+  background-color: rgb(94, 10, 10);
 }

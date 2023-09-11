@@ -24,7 +24,7 @@
     <div class="form" id="formularioCriacao">
       <div class="inputs">
         <div class="formTitle">
-          <img src="../assets/tasks/cadTas.svg" alt="" />
+          <img src="../assets/tasks/cadTask.svg" alt="" />
           <span>Cadastrar Tarefa</span>
         </div>
         <div class="inputRow">
@@ -61,7 +61,7 @@
             />
           </div>
         </div>
-        <div class="inputPrioridade">
+        <div class="selects">
           <select
             name="nivelPrioridade"
             id="nivelPrioridadeForm"
@@ -76,10 +76,21 @@
             <option value="1">Muito baixo</option>
           </select>
 
-          <span id="mensagemErroCadastro" class="erro"
+          <select
+            name="status"
+            id="statusForm"
+            class="nivelNaoSelecionado"
+            required
+          >
+            <option selected disabled value="">Status da tarefa</option>
+            <option value="1">To do</option>
+            <option value="2">Doing</option>
+            <option value="3">Done</option>
+          </select>
+        </div>
+        <span id="mensagemErroCadastro" class="erro"
             >Nenhum campo pode ser vazio!</span
           >
-        </div>
       </div>
 
       <div class="buttons">
@@ -91,7 +102,7 @@
     <div class="form" id="formularioEdicao">
       <div class="inputs">
         <div class="formTitle">
-          <img src="../assets/tasks/cadTas.svg" alt="" />
+          <img src="../assets/tasks/cadTask.svg" alt="" />
           <span>Editar Tarefa</span>
         </div>
         <div class="inputRow">
@@ -114,9 +125,9 @@
             <input type="text" id="categoriaFormEdit" />
           </div>
         </div>
-        <div class="inputPrioridade">
+        <div class="selects">
           <select name="nivelPrioridade" id="nivelPrioridadeFormEdit" class="">
-            <option selected>Nível de prioridade</option>
+            <option selected disabled >Nível de prioridade</option>
             <option value="5">Muito alto</option>
             <option value="4">Alto</option>
             <option value="3">Médio</option>
@@ -124,10 +135,21 @@
             <option value="1">Muito baixo</option>
           </select>
 
-          <span id="mensagemErroEdicao" class="erro"
+          <select
+            name="status"
+            id="statusFormEdit"
+            class="nivelNaoSelecionado"
+            required
+          >
+            <option selected disabled value="">Status da tarefa</option>
+            <option value="1">To do</option>
+            <option value="2">Doing</option>
+            <option value="3">Done</option>
+          </select>
+        </div>
+        <span id="mensagemErroEdicao" class="erro"
             >Nenhum campo pode ser vazio!</span
           >
-        </div>
       </div>
 
       <div class="buttons">
@@ -154,7 +176,7 @@
           <img src="../assets/tasks/ToDo.svg" alt="ToDo" />
           <span>ToDo</span>
         </div>
-        <div class="listaDeTarefas" id="1">
+        <div class="listaDeTarefas" id="1" ondrop="drop(event)" ondragover="allowDrop(event)">
           <!-- To do -->
         </div>
       </div>
@@ -164,7 +186,7 @@
           <img src="../assets/tasks/Doing.svg" alt="ToDo" />
           <span>Doing</span>
         </div>
-        <div class="listaDeTarefas" id="2">
+        <div class="listaDeTarefas" id="2" ondrop="drop(event)" ondragover="allowDrop(event)">
           <!-- Doing -->
         </div>
       </div>
@@ -174,7 +196,7 @@
           <img src="../assets/tasks/Done.svg" alt="ToDo" />
           <span>Done</span>
         </div>
-        <div class="listaDeTarefas" id="3">
+        <div class="listaDeTarefas" id="3" ondrop="drop(event)" ondragover="allowDrop(event)">
           <!-- Done -->
         </div>
       </div>
