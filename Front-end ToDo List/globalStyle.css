@@ -1,0 +1,45 @@
+@font-face {
+    font-family: 'Cerebri';
+    src: url("assets/fonts/CerebriSansPro/CerebriSansPro-Regular.ttf") format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Cerebri';
+    src: url('assets/fonts/CerebriSansPro/CerebriSansPro-Medium.ttf') format('truetype');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'Cerebri';
+    src: url('assets/fonts/CerebriSansPro/CerebriSansPro-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Cerebri';
+    src: url('assets/fonts/CerebriSansPro/CerebriSansPro-Bold.ttf') format('truetype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'MontSerrat';
+    src: url('assets/fonts/MontSerratSubrayada/montserrat-subrayada-bold.ttf');
+}
+
+*{
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+:root{
+    font-size: 62.5%;
+}
+
+body{
+    min-height: 100vh;
+}
