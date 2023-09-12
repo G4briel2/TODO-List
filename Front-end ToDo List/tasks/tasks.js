@@ -1,97 +1,77 @@
-let selectNivelPrioridade = document.getElementById("nivelPrioridadeForm");
-let selectNivelPrioridadeEdit = document.getElementById("nivelPrioridadeFormEdit");
-mudarCorSelect(selectNivelPrioridade)
-mudarCorSelect(selectNivelPrioridadeEdit)
-
-function mudarCorSelect(elemento){
-  elemento.classList.add("nivelNaoSelecionado");
-
-  elemento.addEventListener("change", function () {
-    elemento.classList.remove(
-      "nivel5",
-      "nivel4",
-      "nivel3",
-      "nivel2",
-      "nivel1",
-      "nivelSelecionado"
-    );
-
-    let valorSelecionado = elemento.value;
-
-    switch (valorSelecionado) {
-      case "5":
-        elemento.classList.add("nivel5", "nivelSelecionado");
-        break;
-      case "4":
-        elemento.classList.add("nivel4", "nivelSelecionado");
-        break;
-      case "3":
-        elemento.classList.add("nivel3", "nivelSelecionado");
-        break;
-      case "2":
-        elemento.classList.add("nivel2", "nivelSelecionado");
-        break;
-      case "1":
-        elemento.classList.add("nivel1", "nivelSelecionado");
-        break;
-    }
-  });
-}
-
-// =========================================
-
+//OBJETO
+//Tarefa
 class Tarefa {
-  constructor(
-    nome,
-    descricao,
-    dataConclusao,
-    nivelPrioridade,
-    categoria,
-    status
-  ) {
+  constructor(nome, descricao, dataConclusao, categoria, nivelPrioridade, status){
     this.nome = nome;
     this.descricao = descricao;
     this.dataConclusao = dataConclusao;
-    this.nivelPrioridade = nivelPrioridade;
     this.categoria = categoria;
+    this.nivelPrioridade = nivelPrioridade;
     this.status = status;
   }
 }
 
-let backgroundUnselect = document.getElementById("backGroundUnselect");
+//REFERENCIANDO OS ELEMENTOS ==========================
+//Formulário
+let formularioCriacao = document.getElementById("formularioCriacao");
 
-let confirmBox = document.getElementById("confirmBox");
-let botaoConfirmarExclusao = document.getElementById("yes");
-let botaoCancelarExclusao = document.getElementById("no");
+let tituloFormulario = document.getElementById("tituloFormulario");
 
-let formCadastrar = document.getElementById("formularioCriacao");
-let formEditar = document.getElementById("formularioEdicao");
+//Input nome: String
+let inputNome = document.getElementById("inputNome");
 
-let botaoConfirmarCadastro = document.getElementById("botaoConfirmarCadastro");
-let botaoCancelarCadastro = document.getElementById("botaoCancelarCadastro");
+//Input descrição: String
+let inputDescricao = document.getElementById("inputDescricao");
 
-let botaoConfirmarEdicao = document.getElementById("botaoConfirmarEdicao");
-let botaoCancelarEdicao = document.getElementById("botaoCancelarEdicao");
+//Input data de conclusão: Date -> mínimo = data atual
+let inputDataConclusao = document.getElementById("inputDataConclusao");
 
-let botaoAbrirFormularioCadastro = document.getElementById("abrirFormCriacao");
+let dataAtual = new Date();
+var ano = dataAtual.toLocaleString("default", { year: "numeric" });
+var mes = dataAtual.toLocaleString("default", { month: "2-digit" });
+var dia = dataAtual.toLocaleString("default", { day: "2-digit" });
+inputDataConclusao.min = `${ano}-${mes}-${dia}`;
 
-let mensagemErroCadastro = document.getElementById("mensagemErroCadastro");
-let mensagemErroEdicao = document.getElementById("mensagemErroEdicao");
+//Input categoria: String
+let inputCategoria = document.getElementById("inputCategoria");
 
-let nomeForm = document.getElementById("nomeForm");
-let descricaoForm = document.getElementById("descricaoForm");
-let dataConclusaoForm = document.getElementById("dataConclusaoForm");
-let categoriaForm = document.getElementById("categoriaForm");
-let nivelPrioridadeForm = document.getElementById("nivelPrioridadeForm");
-let statusForm = document.getElementById("statusForm");
+//Input nível de prioridade: int
+let inputNivelPrioridade = document.getElementById("inputNivelPrioridade");
 
-let nomeFormEdit = document.getElementById("nomeFormEdit");
-let descricaoFormEdit = document.getElementById("descricaoFormEdit");
-let dataConclusaoFormEdit = document.getElementById("dataConclusaoFormEdit");
-let categoriaFormEdit = document.getElementById("categoriaFormEdit");
-let nivelPrioridadeFormEdit = document.getElementById("nivelPrioridadeFormEdit");
-let statusFormEdit = document.getElementById("statusFormEdit");
+//Input status: int
+let inputStatus = document.getElementById("inputStatus");
 
+//==============================================
+
+let mensagemErroFormulario = document.getElementById("mensagemErroFormulario");
+
+//==============================================
+
+let botaoConfirmarFormulario = document.getElementById("botaoConfirmarFormulario");
+
+let botaoCancelarFormulario = document.getElementById("botaoCancelarFormulario");
+
+//==============================================
+//Fundo não selecionável
+let fundoNaoSelecionavel = document.getElementById("fundoNaoSelecionavel");
+
+//==============================================
+//Caixa de confirmação de ação
+let caixaDeConfirmacao = document.getElementById("caixaDeConfirmacao");
+
+let opcaoSim = document.getElementById("opcaoSim");
+
+let opcaoNao = document.getElementById("opcaoNao");
+
+//==============================================
+//Botão abrir formulário
+let botaoAbrirFormularioCriacao = document.getElementById("botaoAbrirFormCriacao");
+
+//==============================================
+//Listas de tarefas
+let listasDeTarefas = document.querySelectorAll(".listaDeTarefas");
+
+//LÓGICA =======================================
 let ArrayDeTarefas = [
   {
     nome: "Tarefa de exemplo",
@@ -99,76 +79,12 @@ let ArrayDeTarefas = [
     dataConclusao: "2023-09-08",
     nivelPrioridade: 3,
     categoria: "Categoria de exemplo",
-    status: 1,
-  },
+    status: 1
+  }
 ];
 
-let categoriasDeTarefas = [];
-
-function criarTarefa() {
-  let nomeForm = document.getElementById("nomeForm").value;
-  let descricaoForm = document.getElementById("descricaoForm").value;
-  let dataConclusaoForm = document.getElementById("dataConclusaoForm").value;
-  let nivelPrioridadeForm = document.getElementById(
-    "nivelPrioridadeForm"
-  ).value;
-  let statusForm = document.getElementById("statusForm").value;
-  let categoriaForm = document.getElementById("categoriaForm").value;
-
-  statusForm = parseInt(statusForm);
-  nivelPrioridadeForm = parseInt(nivelPrioridadeForm);
-
-  return new Tarefa(
-    nomeForm,
-    descricaoForm,
-    dataConclusaoForm,
-    nivelPrioridadeForm,
-    categoriaForm,
-    statusForm
-  );
-}
-
-function limparFormulario() {
-  document.getElementById("nomeForm").value = "";
-  document.getElementById("descricaoForm").value = "";
-  document.getElementById("dataConclusaoForm").value = "";
-
-  document.getElementById("nivelPrioridadeForm").value = "";
-  document.getElementById("nivelPrioridadeForm").classList.remove(
-    "nivel5",
-    "nivel4",
-    "nivel3",
-    "nivel2",
-    "nivel1",
-    "nivelSelecionado"
-  );
-
-  document.getElementById("categoriaForm").value = "";
-  statusForm.value = "";
-
-  mensagemErroCadastro.style.display = "none";
-
-  document.getElementById("nomeFormEdit").value = "";
-  document.getElementById("descricaoFormEdit").value = "";
-  document.getElementById("dataConclusaoFormEdit").value = "";
-
-  document.getElementById("nivelPrioridadeFormEdit").value = "";
-  document.getElementById("nivelPrioridadeFormEdit").classList.remove(
-      "nivel5",
-      "nivel4",
-      "nivel3",
-      "nivel2",
-      "nivel1",
-      "nivelSelecionado"
-    );
-
-  document.getElementById("categoriaFormEdit").value = "";
-  statusFormEdit.value = "";
-
-  mensagemErroEdicao.style.display = "none";
-}
-
-function formatadorData(dataString) {
+//Formatador
+function formatadorDataPadraoBrasileiro(dataString) {
   let dataRecebida = new Date(dataString);
 
   const dataFormatada = dataRecebida.toLocaleDateString("pt-BR", {
@@ -181,164 +97,276 @@ function formatadorData(dataString) {
   return dataFormatada;
 }
 
-let mostrarElemento = false;
+//==============================================
 
-function alterarVisibilidadeElemento(...elementos) {
-  mostrarElemento = !mostrarElemento;
-
+//Altera visibilidade de elementos
+function mostrarElementos(display, ...elementos) {
   elementos.forEach(function (elemento) {
-    if (mostrarElemento) {
-      elemento.style.display = "flex";
-    } else {
-      elemento.style.display = "none";
-    }
-  });
+    elemento.style.display = display;
+  })
 }
 
-botaoAbrirFormularioCadastro.addEventListener("click", function () {
-  alterarVisibilidadeElemento(formCadastrar, backgroundUnselect);
-});
+function ocultarElementos(...elementos) {
+  elementos.forEach(function (elemento) {
+    elemento.style.display = "none";
+  })
+}
 
-botaoConfirmarCadastro.addEventListener("click", function () {
-  if (
-    !nomeForm.value ||
-    !descricaoForm.value ||
-    !dataConclusaoForm.value ||
-    !categoriaForm.value ||
-    nivelPrioridadeForm.value === "" || statusForm.value === ""
-  ) {
-    mensagemErroCadastro.style.display = "flex";
+//LIMPA ========================================
+function limparFormulario() {
+  inputNome.value = "";
+
+  inputDescricao.value = "";
+  inputDescricao.style.height = "17px"
+
+  inputDataConclusao.value= "";
+  inputCategoria.value = "";
+
+  inputNivelPrioridade.value = "";
+  inputNivelPrioridade.classList.remove("nivel1", "nivel2", "nivel3", "nivel4", "nivel5", "nivelSelecionado");
+
+  inputStatus.value = "";
+
+  ocultarElementos(mensagemErroFormulario);
+}
+
+//Verificar se inputs não são vazios ===========
+function verificarInputsFormulario() {
+  if (!inputNome.value || !inputDescricao.value || !inputDataConclusao.value || !inputCategoria.value || !inputNivelPrioridade.value || !inputStatus.value){
+    return false;
   } else {
-    let novaTarefa = criarTarefa();
-    console.log(novaTarefa);
-    ArrayDeTarefas.push(criarTarefa());
-    renderizarListaTarefas(ArrayDeTarefas);
-
-    alterarVisibilidadeElemento(formCadastrar, backgroundUnselect);
-    limparFormulario();
+    return true;
   }
-});
-
-botaoCancelarCadastro.addEventListener("click", function () {
-  alterarVisibilidadeElemento(formCadastrar, backgroundUnselect);
-  limparFormulario();
-});
-
-function renderizarListaTarefas(tarefas) {
-  const listas = document.querySelectorAll(".listaDeTarefas");
-
-  listas.forEach(function (lista) {
-    lista.innerHTML = "";
-
-    tarefas.forEach(function (tarefa) {
-      if (tarefa.status === parseInt(lista.id)) {
-        let cardTarefa = criarCardTarefa(tarefa);
-        lista.appendChild(cardTarefa);
-      }
-    });
-  });
 }
 
+//Modificar formulário para edição =============
+function modificarFormularioParaEdicao(tarefa) {
+  tituloFormulario.innerHTML = "Editar Tarefa";
+
+  inputNome.value = tarefa.nome;
+  inputDescricao.value = tarefa.descricao;
+  inputDataConclusao.value = tarefa.dataConclusao;
+  inputCategoria.value = tarefa.categoria;
+  inputNivelPrioridade.value = tarefa.nivelPrioridade;
+  inputStatus.value = tarefa.status;
+
+  botaoConfirmarFormulario.innerHTML = "Atualizar"
+}
+
+//Modificar formulário para cadastro ===========
+function modificarFormularioParaCadastro() {
+  tituloFormulario.innerHTML = "Cadastrar tarefa";
+
+  inputNome.placeholder = "Digite o nome da tarefa";
+  inputDescricao.placeholder = "Uma descrição...";
+  inputDataConclusao.value;
+  inputCategoria.placeholder = "Categoria da tarefa";
+  inputNivelPrioridade.value;
+  inputStatus.value;
+
+  botaoConfirmarFormulario.innerHTML = "Cadastrar"
+}
+
+//Recebe dados dos inputs do formulário ========
+function receberDadosFormulario() {
+  let nomeTarefa = inputNome.value;
+  let descricaoTarefa = inputDescricao.value;
+  let dataConclusaoTarefa = inputDataConclusao.value;
+  let categoriaTarefa = inputCategoria.value;
+
+  let nivelPrioridadeTarefa = inputNivelPrioridade.value;
+  nivelPrioridadeTarefa = parseInt(nivelPrioridadeTarefa);
+  
+  let statusTarefa = inputStatus.value;
+  statusTarefa = parseInt(statusTarefa);
+
+  let dadosInput = {
+    nomeTarefa,
+    descricaoTarefa,
+    dataConclusaoTarefa,
+    categoriaTarefa,
+    nivelPrioridadeTarefa,
+    statusTarefa
+  };
+
+  return dadosInput;
+}
+
+function criarTarefa() {
+  let dados = receberDadosFormulario();
+
+  return new Tarefa(dados.nomeTarefa, dados.descricaoTarefa, dados.dataConclusaoTarefa, dados.categoriaTarefa, dados.nivelPrioridadeTarefa, dados.statusTarefa);
+}
+
+function cadastrarTarefaNoVetor(tarefa) {
+  ArrayDeTarefas.push(tarefa);
+}
+
+//Cria card para tarefa x
 function criarCardTarefa(tarefa) {
   let cardTarefa = document.createElement("div");
   cardTarefa.className = "tarefaCard";
-  cardTarefa.setAttribute("draggable", "true");
-  cardTarefa.setAttribute("ondragstart", "drag(event)")
-  cardTarefa.setAttribute("id", "draggable");
-  
-  let dataTarefa;
+
+  let dataTarefa = "";
   let textoBotao = "";
-  switch (tarefa.status) {
+
+  switch(tarefa.status){
     case 1:
       textoBotao = "Começar";
-      dataTarefa = formatadorData(tarefa.dataConclusao)
+      dataTarefa = formatadorDataPadraoBrasileiro(tarefa.dataConclusao);
       break;
     case 2:
       textoBotao = "Concluir";
-      dataTarefa = formatadorData(tarefa.dataConclusao)
+      dataTarefa = formatadorDataPadraoBrasileiro(tarefa.dataConclusao);
       break;
     case 3:
       textoBotao = "Feito";
-      dataTarefa = new Date()
-      dataTarefa = formatadorData(dataTarefa);
+      dataTarefa = formatadorDataPadraoBrasileiro(new Date());
   }
 
   let nivelPrioridadeCor = "";
   let nivelPrioridadeTexto = "";
   switch (tarefa.nivelPrioridade) {
-    case 5:
-      nivelPrioridadeCor = "nivel5";
-      nivelPrioridadeTexto = "Muito alto";
-      break;
-    case 4:
-      nivelPrioridadeCor = "nivel4";
-      nivelPrioridadeTexto = "Alto";
-      break;
-    case 3:
-      nivelPrioridadeCor = "nivel3";
-      nivelPrioridadeTexto = "Médio";
+    case 1:
+      nivelPrioridadeCor = "nivel1";
+      nivelPrioridadeTexto = "Muito baixo";
       break;
     case 2:
       nivelPrioridadeCor = "nivel2";
       nivelPrioridadeTexto = "Baixo";
       break;
-    case 1:
-      nivelPrioridadeCor = "nivel1";
-      nivelPrioridadeTexto = "Muito baixo";
+    case 3:
+      nivelPrioridadeCor = "nivel3";
+      nivelPrioridadeTexto = "Médio";
+      break;
+    case 4:
+      nivelPrioridadeCor = "nivel4";
+      nivelPrioridadeTexto = "Alto";
+      break;
+    case 5:
+      nivelPrioridadeCor = "nivel5";
+      nivelPrioridadeTexto = "Muito alto";
   }
 
   cardTarefa.innerHTML = `
-                    <div class="content">
-                        <span id="nomeTarefa">${tarefa.nome}</span>
-                        <span id="descricaoTarefa" class="desc">${
-                          tarefa.descricao
-                        }</span>
-                        <div class="prioridade">
-                            <div class="nivel ${nivelPrioridadeCor}"></div>
-                            <span>PRIORIDADE: </span>
-                            <span id="nivelPrioridadeTarefa">${nivelPrioridadeTexto}</span>
-                        </div>
-                        <div id="categoria" class="categoria"><span>CATEGORIA: </span><span>${
-                          tarefa.categoria
-                        }</span></div>
-                    </div>
-                    <div class="actions">
-                        <div class="act1">
-                            <button id="mandarProximaLista" class="proximaLista">${textoBotao}</button>
-                            <span id="dataConclusao" class="date">${dataTarefa}</span>
-                        </div>
-                        <div class="act2">
-                            <button id="mandarListaAnterior" class="icon"><img src="../assets/tasks/reset.svg" alt="retro"></button>
-                            <button class="editarTarefa" class="icon"><img src="../assets/tasks/edit.svg" alt="edit"></button>
-                            <button class="excluirTarefa" class="icon"><img src="../assets/tasks/exclude.svg" alt="exclude"></button>
-                        </div>
-                    </div>
-    `;
+                  <div class="content">
+                      <span id="nomeTarefa">${tarefa.nome}</span>
+                      <span id="descricaoTarefa" class="desc">${tarefa.descricao}</span>
+                      <div class="prioridade">
+                          <div class="nivel ${nivelPrioridadeCor}"></div>
+                          <span>PRIORIDADE: </span>
+                          <span id="nivelPrioridadeTarefa">${nivelPrioridadeTexto}</span>
+                      </div>
+                      <div id="categoria" class="categoria">
+                          <span>CATEGORIA: </span>
+                          <span>${tarefa.categoria}</span>
+                      </div>
+                  </div>
+                  <div class="actions">
+                      <div class="act1">
+                          <button id="mandarProximaLista" class="proximaLista">${textoBotao}</button>
+                          <span id="dataConclusao" class="date">${dataTarefa}</span>
+                      </div>
+                      <div class="act2">
+                          <button id="mandarListaAnterior" class="icon"><img src="../assets/tasks/reset.svg" alt="retro"></button>
+                          <button class="editarTarefa" class="icon"><img src="../assets/tasks/edit.svg" alt="edit"></button>
+                          <button class="excluirTarefa" class="icon"><img src="../assets/tasks/exclude.svg" alt="exclude"></button>
+                      </div>
+                  </div>
+  `;
 
-  const botaoProximaLista = cardTarefa.querySelector("#mandarProximaLista");
+  let botaoProximaLista = cardTarefa.querySelector("#mandarProximaLista");
   botaoProximaLista.addEventListener("click", function () {
     moverParaProximaLista(tarefa);
     renderizarListaTarefas(ArrayDeTarefas);
   });
 
-  const botaoListaAnterior = cardTarefa.querySelector("#mandarListaAnterior");
+  let botaoListaAnterior = cardTarefa.querySelector("#mandarListaAnterior");
   botaoListaAnterior.addEventListener("click", function () {
     moverParaListaAnterior(tarefa);
     renderizarListaTarefas(ArrayDeTarefas);
   });
 
-  const botaoExcluirTarefa = cardTarefa.querySelector(".excluirTarefa");
+  let botaoExcluirTarefa = cardTarefa.querySelector(".excluirTarefa");
   botaoExcluirTarefa.addEventListener("click", function () {
-    excluirTarefa(tarefa);
+    mostrarElementos("flex", caixaDeConfirmacao, fundoNaoSelecionavel);
+
+    opcaoSim.onclick = function() {
+      excluirTarefa(ArrayDeTarefas.indexOf(tarefa));
+
+      renderizarListaTarefas(ArrayDeTarefas);
+      
+      ocultarElementos(caixaDeConfirmacao, fundoNaoSelecionavel);
+    };
+    
+    opcaoNao.onclick = function () {
+      ocultarElementos(caixaDeConfirmacao, fundoNaoSelecionavel);
+    };
   });
 
-  const botaoEditarTarefa = cardTarefa.querySelector(".editarTarefa");
+  let botaoEditarTarefa = cardTarefa.querySelector(".editarTarefa");
   botaoEditarTarefa.addEventListener("click", function () {
-    editarTarefa(tarefa);
-    alterarVisibilidadeElemento(formEditar);
+    modificarFormularioParaEdicao(tarefa);
+    mostrarElementos("flex", formularioCriacao, fundoNaoSelecionavel);
+    ocultarElementos(botaoAbrirFormularioCriacao);
+
+    botaoConfirmarFormulario.onclick = function() {
+      if(verificarInputsFormulario()){
+        editarTarefa(tarefa);
+
+        renderizarListaTarefas(ArrayDeTarefas);
+        
+        ocultarElementos(formularioCriacao, fundoNaoSelecionavel);
+        mostrarElementos("flex", botaoAbrirFormularioCriacao);
+
+        limparFormulario();
+
+      } else {
+        mostrarElementos("flex", mensagemErroFormulario);
+      }
+    }
+
+    botaoCancelarFormulario.onclick = function() {
+      ocultarElementos(formularioCriacao, fundoNaoSelecionavel);
+      mostrarElementos("flex", botaoAbrirFormularioCriacao);
+
+      limparFormulario();
+    }
   });
 
   return cardTarefa;
+} //Final da criação de card ===================
+
+
+//Funções do card de tarefa ====================
+//Create
+botaoAbrirFormularioCriacao.onclick = function() {
+  modificarFormularioParaCadastro();
+  mostrarElementos("flex", formularioCriacao, fundoNaoSelecionavel);
+  ocultarElementos(botaoAbrirFormularioCriacao);
+
+  botaoConfirmarFormulario.onclick = function() {
+    if(verificarInputsFormulario()){
+      cadastrarTarefaNoVetor(criarTarefa());
+
+      renderizarListaTarefas(ArrayDeTarefas);
+      
+      ocultarElementos(formularioCriacao, fundoNaoSelecionavel);
+      mostrarElementos(botaoAbrirFormularioCriacao);
+
+      limparFormulario();
+
+    } else {
+      mostrarElementos("flex", mensagemErroFormulario);
+    }
+  }
+
+  botaoCancelarFormulario.onclick = function() {
+    ocultarElementos(formularioCriacao, fundoNaoSelecionavel);
+    mostrarElementos("flex", botaoAbrirFormularioCriacao);
+
+    limparFormulario();
+  }
 }
 
 function moverParaProximaLista(tarefa) {
@@ -353,81 +381,64 @@ function moverParaListaAnterior(tarefa){
   }
 }
 
-function excluirTarefa(tarefa) {
-  alterarVisibilidadeElemento(confirmBox, backgroundUnselect);
-
-  botaoConfirmarExclusao.onclick = function () {
-    const indice = ArrayDeTarefas.indexOf(tarefa);
-    ArrayDeTarefas.splice(indice, 1);
-
-    renderizarListaTarefas(ArrayDeTarefas);
-    alterarVisibilidadeElemento(confirmBox, backgroundUnselect);
-  };
-
-  botaoCancelarExclusao.onclick = function () {
-    alterarVisibilidadeElemento(confirmBox, backgroundUnselect);
-  };
+//Delete =======================================
+function excluirTarefa(indiceTarefa){
+  ArrayDeTarefas.splice(indiceTarefa, 1);
 }
 
-function editarTarefa(tarefa) {
-  document.getElementById("nomeFormEdit").placeholder = tarefa.nome;
-  document.getElementById("descricaoFormEdit").placeholder = tarefa.descricao;
-  document.getElementById("dataConclusaoFormEdit").value = tarefa.dataConclusao;
-  document.getElementById("nivelPrioridadeFormEdit").value =
-    tarefa.nivelPrioridade;
-  document.getElementById("categoriaFormEdit").placeholder = tarefa.categoria;
-  statusFormEdit.value = tarefa.status;
+//Update =======================================
+function editarTarefa(tarefa){
+  let dados = receberDadosFormulario();
 
-  botaoConfirmarEdicao.onclick = function () {
-    if (
-      !nomeFormEdit.value ||
-      !descricaoFormEdit.value ||
-      !dataConclusaoFormEdit.value ||
-      !categoriaFormEdit.value ||
-      nivelPrioridadeFormEdit.value === "" || statusFormEdit.value === ""
-    ) {
-      mensagemErroEdicao.style.display = "flex";
-    } else {
-      tarefa.nome = document.getElementById("nomeFormEdit").value;
-      tarefa.descricao = document.getElementById("descricaoFormEdit").value;
-      tarefa.dataConclusao = document.getElementById(
-        "dataConclusaoFormEdit"
-      ).value;
-      tarefa.nivelPrioridade = parseInt(
-        document.getElementById("nivelPrioridadeFormEdit").value
-      );
-      tarefa.categoria = document.getElementById("categoriaFormEdit").value;
-      tarefa.status = parseInt(statusFormEdit.value);
+  tarefa.nome = dados.nomeTarefa;
+  tarefa.descricao = dados.descricaoTarefa
+  tarefa.dataConclusao = dados.dataConclusaoTarefa;
+  tarefa.categoria = dados.categoriaTarefa;
+  tarefa.nivelPrioridade = dados.nivelPrioridadeTarefa;
+  tarefa.status = dados.statusTarefa;
+}
 
-      renderizarListaTarefas(ArrayDeTarefas);
+//RENDERIZÇÂO ==================================
+//Read
+function renderizarListaTarefas(tarefas) {
+  listasDeTarefas.forEach(function (lista) {
+    lista.innerHTML = "";
 
-      limparFormulario();
-      alterarVisibilidadeElemento(formEditar, backgroundUnselect);
+    tarefas.forEach(function (tarefa) { 
+      if (tarefa.status == parseInt(lista.id)) {
+        let cardTarefa = criarCardTarefa(tarefa);
+        lista.appendChild(cardTarefa);
+      }
+    })
+  })
+}
+
+//ESTILIZAÇÂO ==================================
+
+function mudarCorSelect(){
+  inputNivelPrioridade.classList.add("nivelNaoSelecionado");
+
+  inputNivelPrioridade.addEventListener("change", function () {
+    inputNivelPrioridade.classList.remove("nivel5", "nivel4", "nivel3", "nivel2", "nivel1", "nivelSelecionado");
+    switch (inputNivelPrioridade.value) {
+      case "1":
+        inputNivelPrioridade.classList.add("nivel1", "nivelSelecionado");
+        break;
+      case "2":
+        inputNivelPrioridade.classList.add("nivel2", "nivelSelecionado");
+        break;
+      case "3":
+        inputNivelPrioridade.classList.add("nivel3", "nivelSelecionado");
+        break;
+      case "4":
+        inputNivelPrioridade.classList.add("nivel4", "nivelSelecionado");
+        break;
+      case "5":
+        inputNivelPrioridade.classList.add("nivel5", "nivelSelecionado");
     }
-  };
-
-  botaoCancelarEdicao.onclick = function () {
-    limparFormulario();
-    alterarVisibilidadeElemento(formEditar, backgroundUnselect);
-  };
+  });
 }
 
+//ON INIT ======================================
 renderizarListaTarefas(ArrayDeTarefas);
-
-// ============================
-
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
-}
-
-let card = document.getElementById("draggable");
+mudarCorSelect();

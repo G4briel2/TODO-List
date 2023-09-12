@@ -2,13 +2,16 @@
   font-family: "Cerebri";
 }
 
+button{
+  cursor: pointer;
+}
+
 nav .links .link .hover {
   position: absolute;
-  top: 5.3rem;
-  left: 7.6rem;
+  bottom: 0;
+  left: 7.5rem;
 
   width: 5.8rem;
-  height: 0.4rem;
 
   background-color: #111318;
 
@@ -54,11 +57,7 @@ nav .links .link a:nth-child(1):hover ~ .hover {
   background-color: #bcfff3;
 }
 
-nav {
-  position: fixed;
-}
-
-#backGroundUnselect {
+#fundoNaoSelecionavel {
   position: fixed;
   display: none;
   align-items: center;
@@ -113,12 +112,11 @@ nav {
   border-radius: 1rem;
 }
 
-.form input::placeholder,
-textarea::placeholder {
+.form input::placeholder, textarea::placeholder {
   color: #d5d7e2;
 }
 
-.form .formTitle {
+.form .tituloFormulario {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -126,7 +124,7 @@ textarea::placeholder {
   gap: 1.2rem;
 }
 
-.form .formTitle span {
+.form .tituloFormulario span {
   padding-top: 0.6rem;
 
   font-size: 2.8rem;
@@ -134,7 +132,7 @@ textarea::placeholder {
   text-transform: uppercase;
 }
 
-.form .formTitle img {
+.form .tituloFormulario img {
   height: 60%;
 }
 
@@ -154,7 +152,7 @@ textarea::placeholder {
   width: 100%;
 }
 
-.form .inputs .inputRow:nth-child(2) .input span {
+.form .inputs .inputLinha:nth-child(2) .input span {
   padding-top: 0.4rem;
   font-size: 2rem;
   font-weight: 700;
@@ -177,23 +175,23 @@ textarea::placeholder {
   border-radius: 0 1rem 1rem 0;
 }
 
-.form .inputs .inputRow:nth-child(2) .input input {
+.form .inputs .inputLinha:nth-child(2) .input input {
   padding-top: 0.4rem;
   font-size: 1.8rem;
   font-weight: 500;
 }
 
-.form .inputs .inputCol {
+.form .inputs .inputColuna {
   display: flex;
   flex-direction: column;
 }
 
-.form .inputs .inputCol span {
+.form .inputs .inputColuna span {
   font-size: 1.8rem;
   font-weight: 600;
 }
 
-.form .inputs .inputCol textarea {
+.form .inputs .inputColuna textarea {
   padding: 0.8rem;
 
   font-size: 1.4rem;
@@ -209,11 +207,11 @@ textarea::placeholder {
   border-radius: 1rem;
 }
 
-.form .inputs .inputCol textarea::placeholder {
+.form .inputs .inputColuna textarea::placeholder {
   font-weight: 500;
 }
 
-.form .inputs .inputRow {
+.form .inputs .inputLinha {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -221,13 +219,13 @@ textarea::placeholder {
   gap: 1.1rem;
 }
 
-.form .inputs .inputRow:nth-child(4) .input input {
+.form .inputs .inputLinha:nth-child(4) .input input {
   padding-top: 0.4rem;
   font-size: 1.4rem;
   font-weight: 500;
 }
 
-.form .inputs .inputRow:nth-child(4) .input span {
+.form .inputs .inputLinha:nth-child(4) .input span {
   white-space: nowrap;
 
   font-size: 1.6rem;
@@ -337,11 +335,13 @@ textarea::placeholder {
   font-size: 1.4rem;
   color: #c31d1d;
 
+  background-color: transparent;
+
   border-radius: 99.9rem;
   border: 5px solid #c31d1d;
 }
 
-#confirmBox {
+#caixaDeConfirmacao {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -358,22 +358,17 @@ textarea::placeholder {
 
   border-radius: 2rem;
   border: 1px solid #fff;
-  background: radial-gradient(
-    240.63% 115.38% at 7.08% 21.84%,
-    rgba(248, 248, 251, 0.85) 0%,
-    rgba(248, 248, 251, 0.62) 63.18%,
-    rgba(248, 248, 251, 0.93) 100%
-  );
+  background: radial-gradient(240.63% 115.38% at 7.08% 21.84%, rgba(248, 248, 251, 0.85) 0%, rgba(248, 248, 251, 0.62) 63.18%, rgba(248, 248, 251, 0.93) 100%);
   backdrop-filter: blur(4px);
 
   z-index: 999;
 }
 
-#confirmBox span {
+#caixaDeConfirmacao span {
   font-size: 1.6rem;
 }
 
-#confirmBox .buttons {
+#caixaDeConfirmacao .buttons {
   display: flex;
   flex-direction: row;
 
@@ -381,7 +376,7 @@ textarea::placeholder {
   width: 100%;
 }
 
-#confirmBox .buttons button {
+#caixaDeConfirmacao .buttons button {
   padding-top: 0.4rem;
 
   height: 4rem;
@@ -395,19 +390,19 @@ textarea::placeholder {
   transition: 200ms;
 }
 
-#confirmBox .buttons button:nth-child(1) {
+#caixaDeConfirmacao .buttons button:nth-child(1) {
   border: none;
   background-color: #2973ae;
   color: white;
 }
 
-#confirmBox .buttons button:nth-child(2) {
+#caixaDeConfirmacao .buttons button:nth-child(2) {
   border: none;
   background-color: #c31d1d;
   color: white;
 }
 
-#confirmBox .buttons button:active {
+#caixaDeConfirmacao .buttons button:active {
   transform: scale(0.95);
 
   transition: 200ms;
@@ -440,13 +435,7 @@ main button.adicionar {
   border: 1px solid #fff;
   border-radius: 1.5rem;
 
-  background: radial-gradient(
-    circle at 9% 100%,
-    rgba(110, 186, 91, 1) 3%,
-    rgba(110, 186, 91, 0.788) 29%,
-    rgba(110, 186, 91, 0.788) 69%,
-    rgba(110, 186, 91, 1) 100%
-  );
+  background: radial-gradient(circle at 9% 100%, rgba(110, 186, 91, 1) 3%, rgba(110, 186, 91, 0.788) 29%, rgba(110, 186, 91, 0.788) 69%, rgba(110, 186, 91, 1) 100%);
 
   transition: 400ms;
 }
@@ -474,18 +463,16 @@ main .listas {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
-  
-  border: 1px solid;
 }
 
-main .listas .listTitle {
+main .listas .tituloLista {
   display: flex;
   flex-direction: row;
 
   gap: 0.7rem;
 }
 
-main .listas .listTitle span {
+main .listas .tituloLista span {
   color: #111318;
   font-size: 2.4rem;
   font-weight: 700;
@@ -526,6 +513,7 @@ main .listas .listaDeTarefas .tarefaCard .content {
 }
 
 main .listas .listaDeTarefas .tarefaCard * {
+  word-wrap: break-word;
   color: #111318;
   font-size: 1.4rem;
   font-weight: 600;
@@ -537,6 +525,7 @@ main .listas .listaDeTarefas .tarefaCard .content span:nth-child(1) {
 
 main .listas .listaDeTarefas .tarefaCard .content span.desc {
   font-weight: 500;
+  line-height: 18px;
 }
 
 main .listas .listaDeTarefas .tarefaCard .content .prioridade {
@@ -551,6 +540,14 @@ main .listas .listaDeTarefas .tarefaCard .content .prioridade .nivel {
   border-radius: 99rem;
   height: 0.7rem;
   aspect-ratio: 1/1;
+}
+
+main .listas .listaDeTarefas .tarefaCard .content .prioridade span:nth-child(3){
+  font-weight: 500;
+}
+
+main .listas .listaDeTarefas .tarefaCard .content .categoria span:nth-child(2){
+  font-weight: 500;
 }
 
 main .listas .listaDeTarefas .tarefaCard .actions {
@@ -586,53 +583,23 @@ main .listas .listaDeTarefas .tarefaCard .actions .act1 button.proximaLista {
   transition: 200ms;
 }
 
-main
-  .listas:nth-child(2)
-  .listaDeTarefas
-  .tarefaCard
-  .actions
-  .act1
-  button.proximaLista {
+main .listas:nth-child(2) .listaDeTarefas .tarefaCard .actions .act1 button.proximaLista {
   background: #daa235;
 }
 
-main
-  .listas:nth-child(2)
-  .listaDeTarefas
-  .tarefaCard
-  .actions
-  .act1
-  button.proximaLista:active {
+main .listas:nth-child(2) .listaDeTarefas .tarefaCard .actions .act1 button.proximaLista:active {
   background-color: #e9af3a;
 }
 
-main
-  .listas:nth-child(3)
-  .listaDeTarefas
-  .tarefaCard
-  .actions
-  .act1
-  button.proximaLista {
+main .listas:nth-child(3) .listaDeTarefas .tarefaCard .actions .act1 button.proximaLista {
   background: #2973ae;
 }
 
-main
-  .listas:nth-child(3)
-  .listaDeTarefas
-  .tarefaCard
-  .actions
-  .act1
-  button.proximaLista:active {
+main .listas:nth-child(3) .listaDeTarefas .tarefaCard .actions .act1 button.proximaLista:active {
   background-color: #358fda;
 }
 
-main
-  .listas:nth-child(4)
-  .listaDeTarefas
-  .tarefaCard
-  .actions
-  .act1
-  button.proximaLista {
+main .listas:nth-child(4) .listaDeTarefas .tarefaCard .actions .act1 button.proximaLista {
   background: #6eba5b;
   pointer-events: none;
 }
@@ -685,13 +652,7 @@ main .listas .listaDeTarefas .tarefaCard .actions .act2 button.editarTarefa {
   background: #e0e0e9;
 }
 
-main
-  .listas
-  .listaDeTarefas
-  .tarefaCard
-  .actions
-  .act2
-  button.editarTarefa:active {
+main .listas .listaDeTarefas .tarefaCard .actions .act2 button.editarTarefa:active {
   background-color: #b4b4c7;
 }
 
@@ -700,13 +661,7 @@ main .listas .listaDeTarefas .tarefaCard .actions .act2 button.excluirTarefa {
   background-color: #111318;
 }
 
-main
-  .listas
-  .listaDeTarefas
-  .tarefaCard
-  .actions
-  .act2
-  button.excluirTarefa:active {
+main .listas .listaDeTarefas .tarefaCard .actions .act2 button.excluirTarefa:active {
   background-color: #000000;
 }
 
